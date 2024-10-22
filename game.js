@@ -1,6 +1,32 @@
 const RAD = Math.PI / 180;
 const scrn = document.getElementById("canvas");
 const sctx = scrn.getContext("2d");
+// Исходные размеры игры
+const originalWidth = 276;
+const originalHeight = 414;
+
+// Функция для настройки размеров канваса
+function resizeCanvas() {
+    const container = document.getElementById('gameContainer');
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+
+    // Рассчитываем масштаб
+    const scale = Math.max(containerWidth / originalWidth, containerHeight / originalHeight);
+
+    // Устанавливаем размеры канваса
+    canvas.width = originalWidth;
+    canvas.height = originalHeight;
+
+    // Устанавливаем масштабирование
+    canvas.style.transform = `scale(${scale})`;
+    canvas.style.transformOrigin = 'top left'; // Устанавливаем начало координат в верхний левый угол // Перерисовываем элементы игры draw();
+}
+// Вызываем resizeCanvas при загрузке страницы
+resizeCanvas();
+
+// Добавляем обработчик события для изменения размера окна
+window.addEventListener('resize', resizeCanvas);
 scrn.tabIndex = 1;
 scrn.addEventListener("click", () => {
   switch (state.curr) {
@@ -87,7 +113,7 @@ const bg = {
 const pipe = {
   top: { sprite: new Image() },
   bot: { sprite: new Image() },
-  gap: 85,
+  gap: 65,
   moved: true,
   pipes: [],
   draw: function () {
